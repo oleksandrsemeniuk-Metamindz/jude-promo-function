@@ -1,0 +1,19 @@
+query RunInput {
+  cart {
+    lines {
+      id
+      quantity
+      merchandise {
+        __typename
+        ... on ProductVariant {
+          product {
+            id
+          }
+          metafield(key: "replace_with_id", namespace: "custom") {
+            value
+          }
+        }
+      }
+    }
+  }
+}
