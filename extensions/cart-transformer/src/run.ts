@@ -19,17 +19,17 @@ export function run(input: RunInput): FunctionRunResult {
     operations: [],
   };
 
-  for (const line of input.cart.lines) {
-    const replaceWithId = getReplaceWithVariantId(line);
-    if (!isItemToReplace(line) || !replaceWithId) continue;
+  const itemToReplace = input.cart.lines.find(isItemToReplace);
+  const replaceWithId = itemToReplace ? getReplaceWithVariantId(itemToReplace) : null;
 
+  if (replaceWithId && itemToReplace) {
     result.operations.push({
       expand: {
-        cartLineId: line.id,
+        cartLineId: itemToReplace.id,
         expandedCartItems: [
           {
             merchandiseId: replaceWithId,
-            quantity: line.quantity * 3,
+            quantity: 3,
           }
         ]
       }
